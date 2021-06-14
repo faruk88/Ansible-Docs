@@ -1,0 +1,29 @@
+- hosts: all
+  tasks:
+  - copy:
+       src: /etc/passwd
+       dest: /tmp
+    tags: dev-team
+  - file:
+       path: /tmp/faruk
+       state: directory
+    tags: test-team
+  - yum: 
+       name: httpd
+       state: installed
+    tags: prod-team
+  - service:
+        name: httpd
+        state: started
+    tags: admin-team
+
+#ansible-playbook <playbook>.yml
+Using tag
+# ansible-playbook <playbook>.yml --tag=dev-team
+
+change the --tag and run playbook
+
+# ansible-playbook <playbook>.yml --skip-tag=dev-team
+all the tasks will run except having tag dev-team.
+
+        

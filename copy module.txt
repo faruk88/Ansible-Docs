@@ -1,0 +1,4 @@
+#ansible-doc -l
+#ansible all -m copy -a 'src=/etc/passwd dest=/tmp'
+#ansible all -m copy -a 'src=/etc/passwd dest=/tmp owner=faruk group=faruk mode=0644'
+faruk should be in managed node.

@@ -1,0 +1,50 @@
+- hosts: all
+  vars:
+       myfile:
+        - /etc/passwd
+       mydir:
+       - /tmp
+  tasks:
+   - copy:
+         src:  "{{ item }}" 
+         dest: "{{ item }}"
+     with_items:
+      - "{{ myfile }}"
+      - "{{ mydir }}"
+
+Above will not work.
+Below yaml file will work.
+
+- hosts: all
+   tasks:
+   - copy:
+         src:  "{{ item[0] }}" 
+         dest: "{{ item[1] }}"
+     with_nested:
+      - ['/etc/passwd', '/etc/group','/etc/passwd']
+      - ['/tmp','/mnt','/opt']
+
+
+- hosts: all
+   tasks:
+   - copy:
+         src:  "{{ item[0] }}" 
+         dest: "{{ item[1] }}"
+     with_nested:
+      - /etc/passwd
+      - /tmp
+
+- hosts: all
+   vars:
+      myfile:
+       - /etc/passwd
+       - /etc/group
+       - /etc/shadow
+   tasks:
+   - copy:
+         src:  "{{ item[0] }}" 
+         dest: "{{ item[1] }}"
+     with_nested:
+      - "{{ myfile }}"
+      - "{{ mydir }}"
+   

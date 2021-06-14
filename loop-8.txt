@@ -1,0 +1,16 @@
+- hosts: all
+   tasks:
+   - user:
+        name: "{{ item.user }}"
+        state: present
+        groups: "{{ item.group }}"
+     with_items:
+      - { user: 'harry', group: 'dev-grp' }
+      - { user: 'natasha', group: 'test-grp' }
+      - { user: 'sarah', group: 'prod-grp' }
+
+You need to add groups in managed nodes
+
+#groupadd dev-grp
+#groupadd test-grp
+#groupadd prod-grp

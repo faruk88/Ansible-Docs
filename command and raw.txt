@@ -1,0 +1,57 @@
+command module:
+You can run one command at a time
+
+raw module:
+You can run more than one command at a time
+---------------------------------------------------------
+
+List of managed hosts in web group of inventory file.
+#ansible web --list-hosts
+
+#ansible web -m command -a "uptime"  ---> A
+By default, the remote user(managed node user) is root. (see ansible.cfg file)
+To see the ansible.cfg file run ansible --version.
+
+For fresh installation, when we run A command then
+It will prompt for fingerprint. If there are 100 machine ,though it is for one time, then we need to type 100 times yes. 
+
+To skip Host key verification ....
+#ansible --version
+#vim /etc/ansible/ansible.cfg
+
+set host_key_verification = False
+:wq
+#ansible web -m command -a "uptime"
+It will give another error. Permission denied. public key.
+
+Without creating public key ..
+
+#ansible web -m command -a "uptime" -k
+#ansible web -m command -a "date" -k
+#ansible web -m command -a "reboot" -k
+#ansible web -m command -a "touch /abc" -k
+#ansible web -m command -a "ls /" -k
+#ansible web -m command -a "yum install httpd -y" -k
+
+#ansible web -m command -a "ls;pwd,whoami" -k
+Error
+#ansible web -m raw -a "ls;pwd,whoami" -k
+
+For keyless , without giving -k option.
+In  master node.
+#ssh-keygen -t rsa
+blank enter
+#cd .ssh
+#ls
+Share the public key with managed machines
+
+#cat id_rsa.pub
+
+copy whole content. Share with managed node.
+In managed node ...
+
+#cd .ssh
+#vim authorized_keys
+append (paste) here.
+#ssh-copy-id -i <managed-user>@<managed-ip>
+#ansible web -m raw -a "ls;pwd,whoami" 

@@ -1,0 +1,39 @@
+
+#ansible-vault create india.txt
+#ansible-vault decrypt india.txt
+
+#vim abc
+
+hello world of ansible
+
+#ansible-vault encrypt abc
+give password, (remember it).
+#cat abc
+
+#ansible-vault decrypt abc
+
+To read the abc without decrypt
+#ansible-vault view abc
+
+To edit 
+#ansible-vault edit abc
+#ansible-vault view abc
+
+
+#vim p1.yml
+- hosts: all
+  tasks:
+  - copy:
+        src: /etc/passwd
+  - file: 
+        path: /tmp/farukdir
+         state: directory
+      
+#ansible-vault encrypt p1.yml
+#ansible-playbook p1.yml
+Run without decrypt
+
+#ansible-playbook p1.yml --ask-vault-pass
+
+To change the key (Password)
+#ansible-vault rekey  p1.yml

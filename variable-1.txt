@@ -1,0 +1,24 @@
+- hosts: all
+   vars:
+      mydir:  /tmp/dir1
+      myfile: /etc/passwd
+      mypkg: 
+        - httpd
+        - nfs-utils
+        - tree
+        - samba
+
+  tasks:
+  - name: "This is Going to create Directory name of {{ mydir }}"
+      file:
+        path: "{{ mydir }}" 
+        state: directory
+  - copy:
+      src: "{{ myfile }}"
+      dest: "{{ mydir }}"
+      owner: faruk
+      group: faruk
+      mode: 750
+   - yum:
+         name: "{{ mypkg }}"
+         state: latest

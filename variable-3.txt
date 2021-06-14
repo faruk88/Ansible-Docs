@@ -1,0 +1,67 @@
+web and app should be entry in inventory file.
+say, inventory file location is /etc/ansible/hosts
+
+[web]
+192.168.1.20
+[app]
+192.168.1.30
+
+- hosts: all
+  vars:
+      mydir: /tmp/dir1
+      myfile:  /etc/passwd
+      mypkg:
+      - httpd
+      - nfs-utils
+      - tree
+      - samba
+  tasks:
+  - name: "This task will create Directory in {{ mydir }}"
+     file:
+        path: "{{ mydir }}"
+        state: directory
+  - name: "Will copy from {{ myfile }} into directory {{ mydir }}"
+    copy:
+       src:  "{{ myfile }}"
+       dest: "{{ mydir }}"
+       owner: faruk
+       group: faruk
+       mode: 750
+  - name: "This task will install some packages {{ mypkg }}" 
+    yum:
+      name: "{{ mypkg }}''
+      state: latest
+
+- hosts: app
+   vars:
+      mydir: /tmp/dir2
+      myfile: /etc/fstab
+   tasks:
+    - file:
+          path: "{{ mydir }}" 
+          state: directory
+
+You can set variables in inventory files like below
+say, inventory file location is /etc/ansible/hosts
+
+[web]
+192.168.1.20  mydir=/tmp/india myfile=/etc/passwd mypkg=httpd,nfs-utils,samba,tree
+192.168.1.30  mydir=/tmp/barpeta myfile=/etc/group mypkg=httpd,nfs-utils,samba,tree
+
+- hosts: all
+  tasks:
+  - name: "This task will create Directory in {{ mydir }}"
+     file:
+        path: "{{ mydir }}"
+        state: directory
+  - name: "Will copy from {{ myfile }} into directory {{ mydir }}"
+    copy:
+       src:  "{{ myfile }}"
+       dest: "{{ mydir }}"
+       owner: faruk
+       group: faruk
+       mode: 750
+  - name: "This task will install some packages {{ mypkg }}" 
+    yum:
+      name: "{{ mypkg }}''
+      state: latest

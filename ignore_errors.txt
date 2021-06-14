@@ -1,0 +1,35 @@
+without ignore_errors
+
+- hosts: all
+  tasks:
+  - copy: 
+       src: /etc/group
+       dest:  /tmp
+  - file:
+       path: /tmp/farukdir
+       state: directory
+  - yum:
+       name: httpd
+       state: installed
+  - service:
+       name: httpd
+       state: started
+
+With ignore_errors , see below
+
+- hosts: all
+  tasks:
+  - copy: 
+       src: /etc/group1
+       dest:  /tmp
+    ignore_errors: yes
+  - file:
+       path: /tmp/farukdir
+       state: directory
+  - yum:
+       name: httpd
+       state: installed
+  - service:
+       name: httpd
+       state: started
+    

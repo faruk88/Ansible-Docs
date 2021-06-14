@@ -1,0 +1,39 @@
+web and app should be entry in inventory file.
+say, inventory file location is /etc/ansible/hosts
+
+[web]
+192.168.1.20   mydir=/tmp/faruk  myfile=/etc/group
+[app]
+192.168.1.30  mydir=/tmp/abdullah  myfile=/etc/gshadow
+
+[web:vars]
+mydir=/tmp/dir1
+myfile=/etc/passwd
+mypkg=httpd,nfs-utils,samba,tree
+
+[app:vars]
+mydir=/tmp/dir2
+myfile=/etc/shadow
+mypkg=httpd,nfs-utils,samba,tree
+
+It will group give priority of host base,
+not hostgroup variables
+
+- hosts: all 
+   tasks:
+   - name: "This task will create {{ mydir }}"
+      file: 
+        path: "{{ mydir }}"
+        state: directory
+   - name: "This task will copy {{ myfile}} to {{ mydir }}"
+      copy:
+          src: "{{ myfile }}"
+          dest: "{{ mydir }}"
+          owner: faruk
+          group: faruk
+          mode: 750
+   - name: "This will install packages {{ mypkg }}" 
+     yum: 
+        name: "{{ mypkg }}"
+        state: latest
+

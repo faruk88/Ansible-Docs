@@ -1,0 +1,10 @@
+Environment variables have a higher precedence than entries in ansible.cfg.
+
+ANSIBLE_CONFIG (environment variable if set)
+
+ansible.cfg (in the current directory)
+
+~/.ansible.cfg (in the home directory)
+
+/etc/ansible/ansible.cfg
+

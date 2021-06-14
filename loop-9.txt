@@ -1,0 +1,21 @@
+- hosts: all
+   tasks:
+   - yum:
+        name: httpd
+        state:  installed
+     when:
+         ansible_distribution == "ubuntu"
+
+for  ansible_distribution
+use :
+# ansible all -m setup
+
+- hosts: all
+   tasks:
+   - yum:
+        name: httpd
+        state:  installed
+     when: ansible_distribution == "ubuntu"
+     when: ansible_distribution_major_version == "7"
+Now, it will take action of last when statement.
+means (when: ansible_distribution_major_version == "7")

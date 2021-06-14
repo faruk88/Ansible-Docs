@@ -1,0 +1,26 @@
+Without Loop :- 
+
+- hosts: all
+  tasks:
+  - copy:
+       src: /etc/passwd
+       dest: /tmp
+  - copy:
+       src: /etc/passwd
+       dest: /tmp
+  - copy:
+       src: /etc/passwd
+       dest: /tmp
+
+With Loop :
+
+- hosts: all
+  tasks:
+  - copy:
+       src: "{{ item }}"
+       dest: /tmp
+     with_items:
+      - /etc/passwd
+      - /etc/group
+      - /etc/shadow
+      - /etc/gshadow

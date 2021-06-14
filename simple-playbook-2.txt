@@ -1,0 +1,20 @@
+Say, there are two hostgroup called web and app
+then .....
+- hosts: web
+  tasks:
+  - copy:
+       src: /etc/shadow
+       dest: /tmp
+       owner: faruk
+       group: faruk
+  - file:
+       path: /tmp/ansible
+       state: directory
+- hosts: app
+   tasks:
+   - yum: 
+        name: httpd
+        state:  latest
+   - service:
+        name: httpd
+        state: started

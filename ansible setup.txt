@@ -1,0 +1,49 @@
+login as normal user  (say student user):
+
+We will execute command in managed node using devops user
+
+Make one directory
+$mkdir /home/student/ansible-demo
+$cd  /home/student/ansible-demo
+$vim ansible.cfg
+[defaults]
+
+inventory = hosts
+remote_user = devops
+
+[privilege_escalation]
+
+become = true
+become_method = sudo
+become_user =root
+become_ask_pass = false
+
+$vim hosts
+
+managed01.example.com
+managed02.example.com
+
+[web]
+managed01
+[app]
+managed02
+
+$ssh-keygen -t rsa
+blank enter
+
+{{
+
+Now in managed nodes .....
+#useradd devops
+#passwd devops
+Now, make entry in sudoers file.
+#cd /etc/sudoers.d/
+#vim devops
+devops   ALL=(ALL)   NOPASSWD: ALL
+
+}}
+
+Again in controlled node.
+#ssh-copy-id -i devops@<managed_node_IP>or <managed_node_HOSTNAME>
+
+

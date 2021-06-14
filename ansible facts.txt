@@ -1,0 +1,11 @@
+#ansible all -m setup
+
+To store facts in a file
+
+#ansible all -m setup --tree /tmp/worker-1
+
+To filter
+# ansible all -m setup -a 'filter=ansible_all_ipv4_addresses'
+# ansible all -m setup -a 'filter=ansible_architecture'
+# ansible all -m setup -a 'filter=ansible_mounts' | grep -i device
+# ansible all -m setup -a 'filter=ansible_virtualization_type'

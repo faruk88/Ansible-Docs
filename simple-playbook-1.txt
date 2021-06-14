@@ -1,0 +1,47 @@
+Dictionary format.
+Easy to find error in this format.
+- hosts: web
+  tasks:
+  - copy:
+       src:  /etc/passwd
+       dest: /tmp
+       owner: student
+       group: student
+       mode: 750
+  - file:
+         path: /tmp/ansible
+         state: directory
+  - yum:
+        name: httpd
+        state: removed
+    tags: dev
+  - service:
+          name: httpd
+          state: started
+
+
+
+Single line format
+difficult to find error in this format.
+- hosts: all
+   tasks:
+    - copy: src=/etc/passwd dest=/tmp  owner=faruk group=faruk  mode=750
+    - file: path=/tmp/aws  state=directory
+    - yum: name=tree state=latest
+    - service: name=httpd state=restarted
+
+
+- hosts: all
+  tasks:
+  - copy: src=/etc/passwd
+              dest=/tmp
+              owner=faruk
+              group=faruk
+              mode=750
+  - file: path=/tmp/azure
+            state=directory
+  - yum: name=nfs-utils
+              state: latest
+  - service: name=nfs-server
+                  state=started
+ 

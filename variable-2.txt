@@ -1,0 +1,53 @@
+Say, You  have mentioned variable in playbook yaml file
+like ..
+
+vars:
+    mydir: /tmp/dir1
+    myfile: /etc/fstab 
+    mypkg: 
+     - httpd
+     - nfs-utils
+     - tree
+     - samba
+and you are also providing same variable in command prompt while
+running playbook then , it will give priority of command prompt.
+Mentioned variable while running playbook. Like below
+
+# ansible-playbook <playbook_name>.yml -e mydir=/tmp/dir2 -e myfile=
+/etc/group -e mypkg=httpd,nfs-utils,samba, tree
+
+if vars and var_files are in playbook then it will give priority of 
+var_files
+
+
+#mkdir /myvariables
+#cd /myvariables
+#vim var.yml
+mydir: /tmp/dir1
+myfile: /etc/fstab
+mypkg: 
+  - httpd
+  - nfs-utils
+  - tree
+  - samba
+
+
+- hosts: all
+  vars_files:
+   - /myvariables/var.yml
+  tasks:
+  - name: "This is Going to create Directory name of {{ mydir }}"
+      file:
+        path: "{{ mydir }}" 
+        state: directory
+  - copy:
+      src: "{{ myfile }}"
+      dest: "{{ mydir }}"
+      owner: faruk
+      group: faruk
+      mode: 750
+   - yum:
+         name: "{{ mypkg }}"
+         state: latest
+
+

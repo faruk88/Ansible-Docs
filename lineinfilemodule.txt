@@ -1,0 +1,35 @@
+#ansible all -m lineinfile -a 'path=/etc/sudoers line="faruk ALL=(ALL) ALL"'
+By default , will add at bottom. check in managed node.
+
+To delete the line "faruk ALL=(ALL) ALL"
+#ansible all -m lineinfile -a 'path=/etc/sudoers line="faruk ALL=(ALL) ALL" state=absent'
+
+If you want to add in top of the file.
+#ansible all -m lineinfile -a 'path=/etc/sudoers line="faruk ALL=(ALL) ALL" insertafter=BOF'
+
+To remove
+#ansible all -m lineinfile -a 'path=/etc/sudoers line="faruk ALL=(ALL) ALL" insertafter=BOF state=absent'
+
+To insert end of the file
+#ansible all -m lineinfile -a 'path=/etc/sudoers line="faruk ALL=(ALL) ALL" insertafter=EOF'
+
+To remove
+#ansible all -m lineinfile -a 'path=/etc/sudoers line="faruk ALL=(ALL) ALL" insertafter=EOF state=absent'
+
+To insert in specific line, say below root in /etc/sudoers
+#ansible all -m lineinfile -a 'path=/etc/sudoers line="faruk ALL=(ALL) ALL" insertafter="^root"'
+
+To insert in specific line, say above root in /etc/sudoers
+#ansible all -m lineinfile -a 'path=/etc/sudoers line="faruk ALL=(ALL) ALL" insertbefore="^root"'
+
+To replace  faruk ALL=(ALL) ALL , with abdullah ALL=(ALL) ALL then
+#ansible all -m lineinfile -a 'path=/etc/sudoers line="abdullah ALL=(ALL) ALL" regexp="^faruk"'
+
+To delete one line beginning with abdullah
+#ansible all -m lineinfile -a 'path=/etc/sudoers  regexp="^faruk"'
+if one group is begging with %wheel group. Do not remove.
+##ansible all -m lineinfile -a 'path=/etc/sudoers  regexp="^%wheel" state=absent'
+##ansible all -m lineinfile -a 'path=/etc/sudoers  regexp="^# %wheel" state=absent'
+
+To disable selinux :-
+#ansible all -m lineinfile -a 'path=/etc/selinux/config  regexp="^SELINUX" line="SELINUX=disabled"'

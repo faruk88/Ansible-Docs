@@ -1,0 +1,34 @@
+Will not work
+
+- hosts: all
+  vars:
+     myfile:
+       - /etc/passwd
+       - /etc/group
+       - /etc/passwd
+  tasks:
+  - copy:
+       src: "{{ myfile }}" 
+       dest: "{{ item }}"
+    with_items:
+     - /tmp
+     - /opt
+     - /mnt
+
+
+Will work
+
+- hosts: all
+  vars:
+     myfile:
+       - /etc/passwd
+       - /etc/group
+       - /etc/passwd
+  tasks:
+  - copy:
+       src: "{{ myfile[0] }}" 
+       dest: "{{ item[1] }}"
+    with_items:
+     - /tmp
+     - /opt
+     - /mnt

@@ -1,0 +1,34 @@
+- hosts: all
+  tasks:
+  - yum:
+       name: httpd
+       state: installed
+     when: ansible_distribution_major_version < "7"
+
+- hosts: all
+  tasks:
+  - yum:
+       name: httpd
+       state: installed
+     when: ansible_distribution_major_version < "8"
+
+use
+<=
+>=
+ and
+or 
+
+operators.
+
+
+- hosts: all
+  tasks:
+  - yum:
+       name: httpd
+       state: installed
+     when: ansible_distribution_major_version  ==  "8" and  ansible_distribution ==  ''ubuntu''
+
+
+when conditions are like this
+
+when: (ansible_distribution_major_version == "7" or ansible_distribution == "CentOS") and (ansible_distribution_major_version == "23" or ansible_distribution == "ubuntu")

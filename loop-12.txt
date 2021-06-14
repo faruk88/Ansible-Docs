@@ -1,0 +1,30 @@
+- hosts: all 
+  tasks:
+  - stat: 
+       path: /etc/farukabdullah
+    register: faruk
+  - debug: var=faruk
+  - copy:
+       content: "Welcome to ansible"
+       dest:  /etc/farukabdullah
+    when: faruk.stat.exists == true 
+
+If needed make one file in managed hosts.
+#touch /etc/farukabdullah
+
+
+
+- hosts: all 
+  tasks:
+  - stat: 
+       path: /etc/farukabdullah
+    register: faruk
+# - debug: var=faruk
+  - copy:
+       content: "Welcome to ansible"
+       dest:  /etc/farukabdullah
+    when: faruk.stat.exists == false
+  - file:
+       path:  /etc/farukabdullah
+       state: touch
+     when: faruk.stat.exists == true

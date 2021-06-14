@@ -1,0 +1,34 @@
+- hosts: all
+  vars:
+      mydir:
+      - /tmp/dir1
+      - /tmp/dir2
+      - /tmp/dir3
+      
+      myfile:
+        - /etc/passwd
+        - /etc/group
+        - /etc/shadow
+        - /etc/gshadow
+   tasks:
+   - copy:
+         src: "{{ item }}"
+         dest: /tmp
+     with_items:
+      - "{{ myfile }}"
+      
+   - file:
+         path: "{{ item }}"
+         state: directory
+     with_items:
+       - "{{ mydir }}"
+   - copy:
+         src: /etc/passwd
+         dest: "{{ item }}" 
+     with_items:
+      - "{{ mydir }}"
+    
+
+
+
+

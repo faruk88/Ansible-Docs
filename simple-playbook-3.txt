@@ -1,0 +1,30 @@
+Import tasks :
+
+
+- name: This is web server group machine
+  hosts: web
+  tasks:
+  - import_tasks: task1.yml
+
+- name: This is my app server group machine
+   hosts: app
+   tasks:
+   - name: This is to install httpd package
+      yum:
+         name: httpd
+         state: latest
+   - name: This is task going to start apache server
+     service:
+         name: httpd
+         state: started 
+   
+Note:  task1.yml should be in same directory or need to
+give full path .
+
+vim task1.yml
+- name: This task is going to install httpd package on remote machine
+   yum:
+      name: httpd
+      state: latest
+
+You can do for app host ... do it.

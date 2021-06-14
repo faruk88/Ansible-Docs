@@ -1,0 +1,26 @@
+Make file in managed node in the directory
+you can copy managed-node-1.fact by mentioning in playbook(using copy module)
+#mkdir /etc/ansible/facts.d
+#cd /etc/ansible/facts.d
+#vim managed-node-1.fact
+[managed-node-1]
+apache=4.5.6
+kernel=3.2
+DISK = 10GB
+RAM = 32GB
+:wq
+
+In master node
+#ansible all -m setup -a 'filter=ansible_local'
+#ansible all -m setup -a 'filter=ansible_local'  | grep -i kernel
+
+
+Run the below playbook by deleting "gather_facts: false "
+By default gather_facts value is true
+
+- hosts:
+  gather_facts: false 
+  tasks:
+  - copy:
+       src: /etc/passwd
+       dest: /tmp

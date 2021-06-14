@@ -1,0 +1,59 @@
+Ec2 instance create using Ansible :
+
+Requirements  Controlled machine:
+
+
+1) ansible Package
+2) python
+3) boto3 (first need pip)
+4) Access key and Secret Key of aws account.
+
+For step 3 use this website
+search in google "python pip linuxhint"
+#pip install boto
+#pip install --upgrade pip
+
+To launch an Instance.
+- hosts: localhost
+
+{{The localhost will got to boto3 , then boto3 will forward to aws.}}
+  tasks:
+  - ec2:
+       aws_access_key: take from aws ac
+       aws_secret_key: take from aws ac
+       key_name: take from aws ac
+       group: create sg aws ac (give only name)
+       instance_type: t2.micro
+       image: take from aws ac
+       wait: yes
+       count: 1
+       wait_timeout: 500
+       instance_tags:
+             Name: Prod-Instance
+       monitoring: yes
+       region: ap-south-1
+       vpc_subnet_id: take from aws ac
+       assign_public_ip: yes
+
+add localhost in hosts ansible file.
+
+#ansible-playbook <playbook>.yml
+
+vpc_subnet_id should be same to stop & start.
+
+To stop :-
+- hosts: localhost
+  tasks:
+  - ec2:
+       aws_access_key: take from aws ac
+       aws_secret_key: take from aws ac
+       instance_ids:  take from aws ac
+       region: ap-south-1
+       state: stopped
+       wait: True
+       vpc_subnet_id: take from aws ac
+       assign_public_ip: no
+    
+#ssh-copy-id -i root@localhost
+
+

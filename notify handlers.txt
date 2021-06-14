@@ -1,0 +1,40 @@
+1) One notify section :- 
+- hosts: all
+  tasks:
+  - lineinfile:
+          path: /etc/ssh/sshd_config
+          line: DenyUsers harry
+    notify: restart_apache
+
+  - copy:
+        src: /etc/passwd
+        dest: /tmp
+  handlers:
+  - name: restart_apache
+    service:
+         name: sshd
+         state: restarted
+  - name: restart_apache
+
+2) One way , more than one notify section
+- hosts: all
+  tasks:
+  - lineinfile:
+          path: /etc/ssh/sshd_config
+          line: DenyUsers harry
+    notify: 
+     - restart_sshd
+     - restart_apache
+
+  - copy:
+        src: /etc/passwd
+        dest: /tmp
+  handlers:
+  - name: restart_sshd
+    service:
+         name: sshd
+         state: restarted
+  - name: restart_apache
+    service:
+        name: httpd
+        state: installed

@@ -1,0 +1,12 @@
+- hosts: all
+  tasks:
+   - command: systemctl is-active sshd
+      register: report
+   - debug: var=report
+
+save and run. then add these lines.
+   - service:
+         name:  httpd
+         state:  started
+     when:  report.rc == 0
+  
