@@ -1,10 +1,14 @@
 Environment variables have a higher precedence than entries in ansible.cfg.
 
-ANSIBLE_CONFIG (environment variable if set)
+If 2) 3) 4) is mentioned but ANSIBLE_CONFIG set then it will take priority
+1) ANSIBLE_CONFIG (environment variable if set)
 
-ansible.cfg (in the current directory)
+If 1) is not set then it will search in current working directory (pwd)
+2) ansible.cfg (in the current directory)
 
-~/.ansible.cfg (in the home directory)
+If 1) and 2) is not set, It will search in the home directory of user(by which user you logged in)
+3) ~/.ansible.cfg (in the home directory)
 
-/etc/ansible/ansible.cfg
+If 1) 2) 3) not found then it will take default ansible.cfg file.
+4) /etc/ansible/ansible.cfg
 
